@@ -1,5 +1,9 @@
 server:
-  port: 8081
+  port: 8085
+minio:
+  endPoint: http://43.143.170.155:9000
+  accessKey: admin
+  secretKey: admin123
 
 spring:
   cloud:
@@ -11,3 +15,9 @@ spring:
         heart-beat-timeout: 20000
         namespace: dev
         register-enabled: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 100MB
+      file-size-threshold: 500MB

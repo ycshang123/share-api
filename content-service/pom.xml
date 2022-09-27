@@ -22,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <component.version>3.1.1</component.version>
+        <sentinel.version>1.8.3</sentinel.version>
         <!--        <start-class>com.share.advertice.AdverticeServiceApplication</start-class>-->
     </properties>
     <dependencies>
@@ -91,7 +92,7 @@
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
-            <version>1.8.3</version>
+            <version>${sentinel.version}</version>
         </dependency>
 
         <dependency>

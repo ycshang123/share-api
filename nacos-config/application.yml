@@ -1,0 +1,50 @@
+disableNoticeRequest: false
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  # cloud:
+  #   sentinel:
+  #     transport:
+  #       port: 8719
+  #       dashboard: 10.40.227.187:8080
+  #     web-context-unify: false
+  #     datasource:
+  #       my-flow:
+  #         nacos:
+  #           username: nacos
+  #           password: nacos
+  #           server-addr: 10.40.227.187:8848
+  #           namespace: ecf8831a-58ac-4e6b-b294-2c2782e9089f
+  #           group-id: SENTINEL_GROUP
+  #           data-id: ${spring.application.name}-flow-rules
+  #           rule-type: flow
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/share?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+    hikari:
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+logging:
+  level:
+    com.ycshang.content.openfeign.UserService: debug
+
+
+# feign:
+#   client:
+#     config:
+#       # 全局超时配置
+#       default:
+#         # 网络连接阶段1秒超时
+#         connect-timeout: 1000
+#         # 服务请求响应阶段5秒超时
+#         read-timeout: 5000
+#       # 针对某个特定服务的超时配置
+#       user-service:
+#         connect-timeout: 1000
+#         read-timeout: 10000
+#   circuitbreaker:
+#     enabled: true

@@ -1,12 +1,13 @@
 spring:
   #  必须把name属性从application.yml迁移过来，否则无法实现动态刷新
   application:
-    name: notoce-service
+    name: notice-service
 
   cloud:
     nacos:
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: 43.143.170.155:8848
+#        server-addr: 127.0.0.1:8848
         file-extension: yml
         namespace: dev
         group: DEFAULT_GROUP

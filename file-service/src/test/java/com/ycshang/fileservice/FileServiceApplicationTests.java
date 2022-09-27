@@ -1,10 +1,10 @@
-package com.ycshang.notice;
+package com.ycshang.fileservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NoticeServiceApplicationTests {
+class FileServiceApplicationTests {
 
     @Test
     void contextLoads() {
