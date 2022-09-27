@@ -1,0 +1,22 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          predicates:
+            - Path=/users/**
+          uri: http://localhost:8081
+        - id: content-service
+          predicates:
+            - Path=/share/**
+          uri: http://localhost:8082
+        - id: notice-service
+          predicates:
+            - Path=/notice/**
+          uri: http://localhost:8083
+
+

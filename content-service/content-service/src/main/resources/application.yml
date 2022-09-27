@@ -1,0 +1,12 @@
+server:
+  port: 8082
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        heart-beat-interval: 5000
+        heart-beat-timeout: 20000
+        namespace: dev
+        register-enabled: true
