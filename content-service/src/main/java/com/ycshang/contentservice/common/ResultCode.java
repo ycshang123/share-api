@@ -50,7 +50,9 @@ public enum ResultCode {
     INTERFACE_FALLBACK(60007,"接口被降级"),
 
     /* 权限错误：70001-79999 */
-    PERMISSION_NO_ACCESS(70001, "无访问权限");
+    PERMISSION_NO_ACCESS(70001, "无访问权限"),
+
+    DATA_IS_UPDATE(70002,"参数非法！该分享审核！");
 
     private Integer code;
 

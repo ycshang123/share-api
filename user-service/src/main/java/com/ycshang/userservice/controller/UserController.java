@@ -1,12 +1,15 @@
 package com.ycshang.userservice.controller;
 
 
+import com.ycshang.userservice.auth.CheckLogin;
 import com.ycshang.userservice.common.ResponseResult;
 import com.ycshang.userservice.domain.dto.UserDto;
 import com.ycshang.userservice.service.UserService;
+import com.ycshang.userservice.utils.JwtOperator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
+
     /**
      * 根据Id查询用户
      *
@@ -29,6 +33,7 @@ public class UserController {
      * @return
      */
     @PostMapping("{id}")
+    @CheckLogin
 //    @SentinelResource(value = "getUser",blockHandler = "getUserBlock")
     public ResponseResult getUserById(@PathVariable Integer id) {
         try {
@@ -43,6 +48,7 @@ public class UserController {
 //        log.info("接口被限流");
 //        return ResponseResult.failure(ResultCode.INTERFACE_FALLBACK);
 //    }
+
     /**
      * 用户登录
      *
@@ -51,6 +57,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public ResponseResult userLogin(@RequestBody UserDto userDto) {
+
         return userService.login(userDto);
     }
 

@@ -11,3 +11,10 @@ spring:
         heart-beat-timeout: 20000
         namespace: dev
         register-enabled: true
+
+
+
+jwt:
+  secret: aaaaaaaaaabbbbbbbbbbbcccccccccccddddddd
+  #  有效期，单位为秒 默认为两周
+  expire-time-in-second: 1209600

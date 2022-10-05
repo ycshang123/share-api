@@ -7,12 +7,15 @@ import com.ycshang.notice.common.ResultCode;
 import com.ycshang.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * @program: share-project
@@ -21,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2022-09-06 16:38
  **/
 @RestController
-@RequestMapping("/notice")
+@RequestMapping("api/notice")
 @Slf4j
 @RefreshScope
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -31,12 +34,17 @@ public class NoticeController {
     @Value("${disableNoticeRequest:false}")
     private Boolean disableNotice;
 
-    @PostMapping("/latest")
+    @GetMapping("/latest")
     @SentinelResource(value = "getNotice", blockHandler = "getNoticeBlock")
-    public ResponseResult getLatestNotice() {
-        if (disableNotice) {
-            log.info("暂停公告服务");
-            return ResponseResult.failure(ResultCode.INTERFACE_FORBID_VISIT);
+    public ResponseResult getLatestNotice(HttpServletRequest request) {
+        String header = request.getHeader("X-Request-Foo");
+        String header1 = request.getHeader("X-Request-Blue");
+        log.info("AddRequestHeader:  " + header);
+        log.info("X-Request-Blue:   " + header1);
+        String param = request.getParameter("username");
+        log.info("AddRequestParameter:  " + param);
+        if (param != null && param.equals("lisi")) {
+            return ResponseResult.failure(ResultCode.REDIRECT_CODE);
         }
         return noticeService.getLatestNotice();
     }
@@ -45,5 +53,13 @@ public class NoticeController {
     public ResponseResult getNoticeBlock(BlockException e) {
         log.info("接口被限流");
         return ResponseResult.failure(ResultCode.INTERFACE_FALLBACK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseResult getId(@PathVariable("id") int id) throws InterruptedException {
+        if (1 == id) {
+            Thread.sleep(500);
+        }
+        return ResponseResult.success();
     }
 }

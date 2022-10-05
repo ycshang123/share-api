@@ -7,6 +7,8 @@ package com.ycshang.notice.common;
 public enum ResultCode {
     /* 成功状态码 */
     SUCCESS(1, "成功"),
+    REDIRECT_CODE(302,"重定向"),
+
 
     /* 参数错误：10001-19999 */
     PARAM_IS_INVALID(10001, "参数无效"),

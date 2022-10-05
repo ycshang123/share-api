@@ -2,6 +2,8 @@ spring:
   #  必须把name属性从application.yml迁移过来，否则无法实现动态刷新
   application:
     name: notice-service
+  profiles:
+    active: dev
 
   cloud:
     nacos:
@@ -16,4 +18,4 @@ spring:
         config-retry-time: 2000
         max-retry: 3
         refresh-enabled: true
-        prefix: application
+        prefix: application-${spring.profiles.active}

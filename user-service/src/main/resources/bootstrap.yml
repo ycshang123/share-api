@@ -2,6 +2,8 @@ spring:
   #  必须把name属性从application.yml迁移过来，否则无法实现动态刷新
   application:
     name: user-service
+  profiles:
+    active: dev
 
   cloud:
     nacos:
@@ -11,9 +13,10 @@ spring:
         file-extension: yml
         namespace: dev
         group: DEFAULT_GROUP
+#        group: DEV_GROUP
         timeout: 5000
         config-long-poll-timeout: 10000
         config-retry-time: 2000
         max-retry: 3
         refresh-enabled: true
-        prefix: application
+        prefix: application-${spring.profiles.active}
