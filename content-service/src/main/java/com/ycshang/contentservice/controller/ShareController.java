@@ -7,11 +7,18 @@ import com.ycshang.contentservice.common.ResponseResult;
 import com.ycshang.contentservice.common.ResultCode;
 
 import com.ycshang.contentservice.domain.dto.ShareDTO;
+import com.ycshang.contentservice.domain.dto.ShareSearchDTO;
 import com.ycshang.contentservice.service.ShareService;
+import com.ycshang.contentservice.utils.JwtOperator;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @program: share-project
@@ -26,6 +33,8 @@ import org.springframework.web.bind.annotation.*;
 public class ShareController {
 
     private final ShareService shareService;
+
+    private final JwtOperator jwtOperator;
 
 
     @PostMapping("{id}")
@@ -43,14 +52,24 @@ public class ShareController {
 
     @GetMapping("/list")
     public ResponseResult shareList(
-            @RequestParam(defaultValue = "0",required = false,value = "pageIndex") Integer pageIndex,
-            @RequestParam(defaultValue = "999",required = false,value = "pageSize") Integer pageSize
+            @RequestParam(defaultValue = "1", required = false, value = "pageIndex") Integer pageIndex,
+            @RequestParam(defaultValue = "10", required = false, value = "pageSize") Integer pageSize,
+            @RequestParam(defaultValue = "", required = false, value = "title") String title,
+            @RequestParam(defaultValue = "", required = false, value = "name") String name,
+            @RequestParam(defaultValue = "", required = false, value = "content") String content,
+            @RequestHeader(value = "x-token", required = false) String token
     ) {
-        String result = shareService.getInfo(2022);
-        if ("BLOCKED".equals(result)) {
-            return ResponseResult.failure(ResultCode.INTERFACE_EXCEED_LOAD);
+        Integer userId = 0;
+        if (token != null) {
+            Claims claims = jwtOperator.getClaimsFromToken(token);
+            userId = (Integer) claims.get("id");
         }
-        return shareService.shareList(pageIndex,pageSize);
+        if (pageSize > 100) {
+            pageSize = 100;
+        }
+        Pageable pageable = PageRequest.of(pageIndex - 1, pageSize);
+        ShareSearchDTO searchDTO = ShareSearchDTO.builder().title(title).content(content).name(name).build();
+        return shareService.shareList(pageable, searchDTO, userId);
     }
 
     public ResponseResult getAllShareBlock(BlockException e) {
@@ -59,6 +78,12 @@ public class ShareController {
     }
 
 
+    /**
+     * 审核
+     *
+     * @param shareDTO
+     * @return
+     */
     @PostMapping("/check")
     @CheckAuthorization("admin")
     public ResponseResult checkContent(@RequestBody ShareDTO shareDTO) {

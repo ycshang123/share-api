@@ -3,6 +3,8 @@ package com.ycshang.contentservice.service;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.ycshang.contentservice.common.ResponseResult;
 import com.ycshang.contentservice.domain.dto.ShareDTO;
+import com.ycshang.contentservice.domain.dto.ShareSearchDTO;
+import org.springframework.data.domain.Pageable;
 
 public interface ShareService {
 
@@ -18,7 +20,7 @@ public interface ShareService {
      * 内容列表
      * @return
      */
-    ResponseResult shareList(Integer pageIndex,Integer pageSize);
+    ResponseResult shareList(Pageable pageable, ShareSearchDTO shareSearchDTO, Integer userId);
 
     String getInfo(int  number);
 

@@ -15,3 +15,9 @@ jwt:
   secret: aaaaaaaaaabbbbbbbbbbbcccccccccccddddddd
   #  有效期，单位为秒 默认为两周
   expire-time-in-second: 1209600
+
+
+rocketmq:
+  name-server: 120.55.48.170:9876
+  producer:
+    group: test-group
